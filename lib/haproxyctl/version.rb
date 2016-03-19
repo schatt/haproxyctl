@@ -1,3 +1,3 @@
 module HAProxyCTL
-  VERSION = "0.2.0"
+  VERSION = '1.4.3'
 end

@@ -9,21 +9,34 @@ This is a simple wrapper to make life with HAProxy a little more convenient.
 * Provides Nagios and Cloudkick health checks
 * chkconfig/service-able for Redhat folk
 
-[Here](http://scale10x.biggiantnerds.com) is a presentation about it.
+[Here](http://lo.ladevops.org/haproxyctl) is a presentation about it.  Hit space to advance slides.
+
 
 Installation
 ------------
 
 On most UNIX, assuming HAProxy is in the $PATH:
-  
-  git clone git@github.com:flores/haproxyctl.git
-  ln -s haproxyctl/haproxyctl /etc/init.d/haproxyctl
+<pre>
+git clone git@github.com:flores/haproxyctl.git
+ln -s haproxyctl/haproxyctl /etc/init.d/haproxyctl
+</pre>
 
 For chkconfig/RedHat/Centos, add:
-  
-  chkconfig --add haproxyctl
+<pre>
+chkconfig --add haproxyctl
+</pre>
 
-There is also an HAProxy source installation script.  This installs not only the steps above but latest HAProxy sources!
+Or if have RubyGems, just gem install it!
+<pre>
+gem install haproxyctl
+</pre>
+
+Or if you are on Debian, just install haproxy with apt-get!
+<pre>
+apt-get install haproxyctl
+</pre>
+
+There is also an HAProxy source installation script.  This installs not only the steps above but also HAProxy itself.
 
 Options
 -----------------
@@ -50,7 +63,7 @@ usage: ./haproxyctl <argument>
     prompt: toggle interactive mode with prompt
     quit: disconnect
     show info: report information about the running process
-    show stat: report counters for each proxy and server
+    show stat [counter...]: report counters for each proxy and server
     show errors: report last request and response errors for each proxy
     show sess [id]: report the list of current sessions or dump this session
     get weight: report a server's current weight
@@ -221,8 +234,36 @@ Examples
   ssh,localhost,0,0,0,3,,122,54524,291662,,0,,0,0,0,0,UP,1,1,0,0,0,2144680,0,,1,7,1,,122,,2,0,,10,L4OK,,0,0,121,0,1,0,0,0,,,,0,0,
   ssh,BACKEND,0,0,0,3,0,122,54524,291662,0,0,,0,0,0,0,UP,1,1,0,,0,2144680,0,,1,7,0,,122,,1,0,,10,,,,0,121,0,1,0,0,,,,,0,0,
 </pre>
-  
-## More additions: Enables or disables a target server from every backend it appears.  
+### Extends stat command to print only counters supplied as arguments
+<pre>
+  ./haproxyctl "show stat qcur qmax"
+  http,FRONTEND,,
+  sinatra,sinatra_downoi,0,0
+  sinatra,sinatra_rindica,0,0
+  sinatra,sinatra_guinea,0,0
+  sinatra,BACKEND,0,0
+  ei,guinea,0,0
+  ei,belem,0,0
+  ei,BACKEND,0,0
+  drop,guinea,0,0
+  drop,belem,0,0
+  drop,BACKEND,0,0
+  apache,guinea,0,0
+  apache,belem,0,0
+  apache,BACKEND,0,0
+  static,ngnix_downoi,0,0
+  static,ngnix_petite,0,0
+  static,ngnix_rindica,0,0
+  static,nginx_stellatus,0,0
+  static,nginx_belem,0,0
+  static,nginx_petite,0,0
+  static,apache_guinea,0,0
+  static,BACKEND,0,0
+  ssh,localhost,0,0
+  ssh,BACKEND,0,0
+</pre>
+
+## Enable or disable a target server from every backend it appears.
 <pre>
   ./haproxyctl "show health"
   # pxname        svname               status  weight
@@ -306,9 +347,6 @@ Examples
 Contributors
 ------------
 
-Ordered by date of first contribution.
-[Auto-generated](http://github.com/dtrejo/node-authors) on Thu Aug 16 2012 15:45:25 GMT-0700 (PDT).
-
 - [flores aka `flores`](https://github.com/flores)
 - [Scott Gonyea aka `sgonyea`](https://github.com/sgonyea)
 - [Ben Lovett aka `blovett`](https://github.com/blovett)
@@ -317,6 +355,17 @@ Ordered by date of first contribution.
 - [Erik Osterman aka `osterman`](https://github.com/osterman)
 - [Martin Hald aka `mhald`](https://github.com/mhald)
 - [deniedboarding](https://github.com/deniedboarding)
+- [Aaron Blew aka `blewa`](https://github.com/blewa)
+- [Nick Griffiths aka `nicobrevin`](https://github.com/nicobrevin)
+- [Florian Holzhauer aka `fh`](https://github.com/fh)
+- [Jonas Genannt aka `hggh`](https://github.com/hggh)
+- [Grant Shively aka `gshively11`](https://github.com/gshively11)
+
+Non-current HAProxy versions 
+------------
+Be aware that HAProxy below version 1.4 does not support many of the 
+options of haproxyctl.
+
 
 License
 -----------------
